@@ -1,7 +1,7 @@
 {
-  "name": "carwow",
+  "name": "mobwow",
   "version": "1.0.0",
-  "description": "carWOW cars marketplace",
+  "description": "mobWOW cars marketplace",
   "main": "index.html",
   "scripts": {
     "build": "npx tailwindcss -i ./src/style.css -o ./dist/main.css",
