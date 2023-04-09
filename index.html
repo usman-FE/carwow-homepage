@@ -1,51 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html
+  lang="en"
+  class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="./dist/main.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./dist/main.css" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
 
+    <title>mobWOW | CARS</title>
+  </head>
 
-  <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
-  <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
-
-  <title>mobWOW | CARS</title>
-</head>
-
-<body>
-  <!-- MAIN CONTAINER START -->
-  <main class="h-full">
-    <!-- header menu -->
-    <header x-data="{
+  <body>
+    <!-- MAIN CONTAINER START -->
+    <main class="h-full">
+      <!-- header menu -->
+      <header
+        x-data="{
         atTop : false, 
         sideNav: false,
         bodyOverflow: function (modal) {
           document.querySelector('body').classList.remove('overflow-hidden', 'overflow-visible');
           document.querySelector('body').classList.add(modal ? 'overflow-hidden' : 'overflow-visible');
         }
-      }" class="header relative z-40" @scroll.window="
+      }"
+        class="header relative z-40"
+        @scroll.window="
       if(window.pageYOffset > $el.offsetHeight){
         atTop = true;
       }else{
         atTop = false;
       }
     ">
-      <div
-        class="w-full backdrop-blur-[1px] left-0 top-0 transition-all duration-300 py-6 fixed lg:py-6 text-white shadow-lg z-20"
-        :class="{'bg-white': atTop}">
-        <div class="container mx-auto px-[15px] xl:max-w-[1200px] relative z-10">
-          <div class="nav__wrapper flex items-center justify-between">
-            <div class="nav__brand">
-              <a class="w-32 block" href="#">
-                <img src="images/mobWOW-Base-Logo-Red (2).svg" class="w-full h-auto" alt="">
-              </a>
-            </div>
-            <div x-data='{
+        <div
+          class="w-full backdrop-blur-[1px] left-0 top-0 transition-all duration-300 fixed text-white shadow-lg z-20"
+          :class="[
+            atTop ? 'py-2' : 'py-4',
+            atTop ? 'bg-white' : ''
+            ]">
+          <div
+            class="container mx-auto px-[15px] xl:max-w-[1200px] relative z-10">
+            <div
+              class="nav__wrapper flex items-center justify-between">
+              <div class="nav__brand">
+                <a
+                  class="w-32 block"
+                  href="#">
+                  <img
+                    src="images/mobWOW-Base-Logo-Red (2).svg"
+                    class="w-full h-auto"
+                    alt="" />
+                </a>
+              </div>
+              <div
+                x-data='{
             selectedMenu: null,
             menus: [
               {
@@ -116,256 +143,332 @@
                 ]
               }
             ]
-          }' class="nav__wrapper fixed lg:static w-full h-screen lg:h-auto left-0 top-0 flex justify-end lg:block bg-gray-900 lg:bg-transparent bg-opacity-40 transition-all duration-300 ease-[ease] z-20"
-              :class="sideNav ? 'visible' : 'invisible lg:visible'">
-              <div @click="sideNav = false; bodyOverflow(sideNav)" class="flex-1 h-full lg:hidden cursor-pointer"></div>
-              <nav
-                class="nav__menu flex-none w-80 lg:w-full h-full lg:h-auto lg:flex lg:items-center lg:justify-end bg-[#ff0020] lg:bg-transparent transition-all duration-300 ease-[ease] shadow-md lg:shadow-none"
-                :class="sideNav ? 'mr-0' : '-mr-80'">
-                <ul class="menu lg:flex lg:space-x-8 list-none px-8 lg:px-0 py-16 lg:py-0">
+          }'
+                class="nav__wrapper fixed lg:static w-full h-screen lg:h-auto left-0 top-0 flex justify-end lg:block bg-gray-900 lg:bg-transparent bg-opacity-40 transition-all duration-300 ease-[ease] z-20"
+                :class="sideNav ? 'visible' : 'invisible lg:visible'">
+                <div
+                  @click="sideNav = false; bodyOverflow(sideNav)"
+                  class="flex-1 h-full lg:hidden cursor-pointer"></div>
+                <nav
+                  class="nav__menu flex-none w-80 lg:w-full h-full lg:h-auto lg:flex lg:items-center lg:justify-end bg-[#ff0020] lg:bg-transparent transition-all duration-300 ease-[ease] shadow-md lg:shadow-none"
+                  :class="sideNav ? 'mr-0' : '-mr-80'">
+                  <ul
+                    class="menu lg:flex lg:space-x-8 list-none px-8 lg:px-0 py-16 lg:py-0">
+                    <template
+                      x-for="(menu, index) in menus"
+                      :key="menu.id">
+                      <li
+                        @click="selectedMenu !== index ? selectedMenu = index : selectedMenu = null"
+                        class="menu__item relative group transition duration-300 ease-[ease] after:absolute after:content-[''] after:w-full after:origin-left after:scale-x-0 hover:after:scale-x-100 after:left-0 after:bottom-0 lg:after:h-[2px] after:bg-[#ff0020] after:transition after:duration-300 after:ease-[ease] cursor-pointer font-semibold">
+                        <template x-if="!menu.submenu">
+                          <a
+                            class="menu__item-link block text-sm uppercase py-2"
+                            :class="!atTop ? 'text-white ' : 'text-white lg:text-gray-700'"
+                            :href="menu.url"
+                            x-text="menu.label"></a>
+                        </template>
 
-                  <template x-for="(menu, index) in menus" :key="menu.id">
-                    <li @click="selectedMenu !== index ? selectedMenu = index : selectedMenu = null"
-                      class="menu__item relative group transition duration-300 ease-[ease] after:absolute after:content-[''] after:w-full after:origin-left after:scale-x-0 hover:after:scale-x-100 after:left-0 after:bottom-0 lg:after:h-[2px] after:bg-[#ff0020] after:transition after:duration-300 after:ease-[ease] cursor-pointer font-semibold">
-
-                      <template x-if="!menu.submenu">
-                        <a class="menu__item-link block text-sm uppercase py-2"
-                          :class="!atTop ? 'text-white ' : 'text-white lg:text-gray-700'" :href="menu.url"
-                          x-text="menu.label"></a>
-                      </template>
-
-                      <template x-if="menu.submenu">
-                        <div>
-                          <button
-                            class="w-full flex items-center justify-between lg:justify-start cursor-pointer focus:outline-none"
-                            :class="!atTop ? 'text-white' : 'text-white lg:text-gray-700'">
-                            <span class="menu__link flex-1 text-sm text-current uppercase text-left py-2"
-                              x-text="menu.label"></span>
-                            <svg
-                              class="svg-inline--fa fa-angle-down fa-w-10 fa-2x w-3 h-3 transition duration-300 ease-in-out transform lg:group-hover:-rotate-180 ml-2 mb-1 lg:mb-0"
-                              :class="{'-rotate-90': selectedMenu === index }" aria-hidden="true" focusable="false"
-                              data-prefix="far" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 320 512">
-                              <path fill="currentColor"
-                                d="M151.5 347.8L3.5 201c-4.7-4.7-4.7-12.3 0-17l19.8-19.8c4.7-4.7 12.3-4.7 17 0L160 282.7l119.7-118.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17l-148 146.8c-4.7 4.7-12.3 4.7-17 0z"
-                                class=""></path>
-                            </svg>
-                          </button>
-                          <ul
-                            class="submenu whitespace-nowrap z-40 list-none lg:bg-white w-full lg:w-52 top-full transition-all duration-300 ease-[ease] origin-top"
-                            :class="{'static lg:absolute visible scale-y-100 opacity-100': selectedMenu === index, 'absolute invisible lg:group-hover:visible scale-y-0 lg:group-hover:scale-y-100 opacity-0 lg:group-hover:opacity-100': selectedMenu !== index }"
-                            aria-hidden="true">
-
-                            <template x-for="item in menu.submenu" :key="item.id">
-                              <li
-                                class="submenu__item text-sm hover:text-[#ff0020] text-white lg:text-gray-700 hover:bg-gray-100 text-center lg:text-left">
-                                <a class="submenu__item-link block text-current text-left py-2 px-6" :href="item.url"
-                                  x-text="item.label"></a>
-                              </li>
-                            </template>
-                          </ul>
-                        </div>
-                      </template>
-                    </li>
-                  </template>
-                </ul>
-                <!-- DIVIDER -->
-                <div class="hidden lg:block w-px h-8 bg-[#e2dbff] mx-3"></div>
-                <!-- LOGIN / SIGN UP -->
-                <div class="flex gap-2 justify-center text-center">
-                  <!-- button 1 -->
-                  <a href="#"
-                    class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-white before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-white hover:text-[#ff0020] block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-[#ff0020]  after:transition-all border border-[#ff0020] hover:border-white">
-                    Login
-                  </a>
-                  <!-- button 2 -->
-                  <a href="#"
-                    class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white  after:transition-all border border-[#ff0020] hover:border-[#ff0020]">
-                    Sign up
-                  </a>
-                </div>
-              </nav>
-            </div>
-            <div class="lg:hidden">
-              <div class="nav__toggle h-8 flex items-center justify-end">
-                <button @click="sideNav = !sideNav; bodyOverflow(sideNav)"
-                  class="cursor-pointer h-10 flex items-center justify-center outline-none focus:outline-none px-3 mr-2 z-50 text-white border"
-                  :class="{
+                        <template x-if="menu.submenu">
+                          <div>
+                            <button
+                              class="w-full flex items-center justify-between lg:justify-start cursor-pointer focus:outline-none"
+                              :class="!atTop ? 'text-white' : 'text-white lg:text-gray-700'">
+                              <span
+                                class="menu__link flex-1 text-sm text-current uppercase text-left py-2"
+                                x-text="menu.label"></span>
+                              <svg
+                                class="svg-inline--fa fa-angle-down fa-w-10 fa-2x w-3 h-3 transition duration-300 ease-in-out transform lg:group-hover:-rotate-180 ml-2 mb-1 lg:mb-0"
+                                :class="{'-rotate-90': selectedMenu === index }"
+                                aria-hidden="true"
+                                focusable="false"
+                                data-prefix="far"
+                                data-icon="angle-down"
+                                role="img"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 320 512">
+                                <path
+                                  fill="currentColor"
+                                  d="M151.5 347.8L3.5 201c-4.7-4.7-4.7-12.3 0-17l19.8-19.8c4.7-4.7 12.3-4.7 17 0L160 282.7l119.7-118.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17l-148 146.8c-4.7 4.7-12.3 4.7-17 0z"
+                                  class=""></path>
+                              </svg>
+                            </button>
+                            <ul
+                              class="submenu whitespace-nowrap z-40 list-none lg:bg-white w-full lg:w-52 top-full transition-all duration-300 ease-[ease] origin-top"
+                              :class="{'static lg:absolute visible scale-y-100 opacity-100': selectedMenu === index, 'absolute invisible lg:group-hover:visible scale-y-0 lg:group-hover:scale-y-100 opacity-0 lg:group-hover:opacity-100': selectedMenu !== index }"
+                              aria-hidden="true">
+                              <template
+                                x-for="item in menu.submenu"
+                                :key="item.id">
+                                <li
+                                  class="submenu__item text-sm hover:text-[#ff0020] text-white lg:text-gray-700 hover:bg-gray-100 text-center lg:text-left">
+                                  <a
+                                    class="submenu__item-link block text-current text-left py-2 px-6"
+                                    :href="item.url"
+                                    x-text="item.label"></a>
+                                </li>
+                              </template>
+                            </ul>
+                          </div>
+                        </template>
+                      </li>
+                    </template>
+                  </ul>
+                  <!-- DIVIDER -->
+                  <div
+                    class="hidden lg:block w-px h-8 bg-[#e2dbff] mx-3"></div>
+                  <!-- LOGIN / SIGN UP -->
+                  <div class="flex gap-2 justify-center text-center">
+                    <!-- button 1 -->
+                    <a
+                      href="#"
+                      class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-white before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-white hover:text-[#ff0020] block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-[#ff0020] after:transition-all border border-[#ff0020] hover:border-white">
+                      Login
+                    </a>
+                    <!-- button 2 -->
+                    <a
+                      href="#"
+                      class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white after:transition-all border border-[#ff0020] hover:border-[#ff0020]">
+                      Sign up
+                    </a>
+                  </div>
+                </nav>
+              </div>
+              <div class="lg:hidden">
+                <div
+                  class="nav__toggle h-8 flex items-center justify-end">
+                  <button
+                    @click="sideNav = !sideNav; bodyOverflow(sideNav)"
+                    class="cursor-pointer h-10 flex items-center justify-center outline-none focus:outline-none px-3 mr-2 z-50 text-white border"
+                    :class="{
                      'text-black border-black': atTop,
                      'text-white border-white': !atTop 
                   }">
-                  <span x-show="!sideNav" class="text-sm">MENU</span>
-                  <svg x-show="sideNav" class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 320 512">
-                    <path
-                      d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z">
-                    </path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- HEADER END -->
-
-    <!-- HERO SECTION START -->
-    <!-- BANNER -->
-    <section class="pb-6">
-      <div class="relative px-4 md:px-8">
-        <div class="absolute inset-y-0 w-5/6 xl:w-3/4 right-0 flex-grow">
-          <div class="z-10 bg-slate-900/20 absolute w-full h-full"></div>
-          <img class="absolute inset-0 object-cover w-full h-full" src="images/pexels-lee-chinyama-9162116.jpg"
-            alt="hero" />
-        </div>
-        <div class="relative py-24 lg:pt-28 lg:pb-16 z-30">
-          <div class="relative inline-flex">
-            <div class="w-screen right-20 md:right-72 inset-y-0 absolute bg-[#ff0020]"></div>
-            <div
-              class="relative max-w-3xl inline-flex sm:flex-shrink-0 flex-col items-start py-16 sm:py-20 lg:py-24  text-white">
-              <h2 class="font-semibold text-4xl md:text-5xl xl:text-7xl !leading-[110%]">
-                Lorem ipsum dolor sit amet consectetur.
-              </h2>
-              <div class="flex items-center gap-4 py-7">
-                <!-- button 1 -->
-                <a href="#"
-                  class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white  after:transition-all border hover:border-white">
-                  buy
-                </a>
-                <!-- button 2 -->
-                <a href="#"
-                  class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white  after:transition-all border hover:border-white">
-                  sell
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- ---- -->
-          <div class="container mx-auto px-4 mt-16">
-            <form
-              class="w-full grid grid-cols-12 bg-white max-w-screen-xl xl:max-w-[1200px] mx-auto rounded-lg shadow-xl dark:shadow-2xl overflow-hidden">
-              <!-- ALL FEATURES -->
-              <div class="col-span-6 lg:col-span-4 border-b border-r relative">
-                <img src="images/image-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <select name="feature" id="feature"
-                  class="w-full border-none h-12 md:h-14 p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif] bg-white">
-                  <option>All feature types</option>
-                  <option>Interview</option>
-                  <option>Photo Essay</option>
-                  <option>Spotlight</option>
-                  <option>Story</option>
-                  <option>Video</option>
-                </select>
-              </div>
-              <!-- ALL ACTIVITY -->
-              <div class="col-span-6 lg:col-span-4 border-b border-r relative">
-                <img src="images/skiing-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <select name="activity" id="activity"
-                  class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
-                  <option>All activity types</option>
-                  <option>Base Jumping</option>
-                  <option>Backpacking</option>
-                  <option>Biking</option>
-                  <option>Camping</option>
-                  <option>Conservation</option>
-                  <option>Cycling</option>
-                </select>
-              </div>
-              <!-- ALL DESTINATIONS -->
-              <div class="col-span-6 lg:col-span-4 border-b border-r relative">
-                <img src="images/map-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <select name="destination" id="destination"
-                  class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
-                  <option>All destinations</option>
-                  <option>Afghanistan</option>
-                  <option>Albania</option>
-                  <option>Andorra</option>
-                  <option>Antarctica</option>
-                  <option>Argentina</option>
-                  <option>Australia</option>
-                  <option>Pakistan</option>
-                </select>
-              </div>
-              <!-- ALL AUTHORS -->
-              <div class="col-span-6 lg:col-span-3 border-b border-r relative">
-                <img src="images/pen-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <select name="authors" id="authors"
-                  class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
-                  <option>All Authors</option>
-                  <option>Aaron Rolph</option>
-                  <option>Adam Boggon</option>
-                  <option>Aldo Kane</option>
-                  <option>Aled Bath</option>
-                  <option>Alex Metcalfe</option>
-                  <option>Alice Bowers</option>
-                  <option>Andreas B. Heide</option>
-                  <option>Ángel Pérez Grimaldi</option>
-                  <option>Angelo Concilio</option>
-                  <option>Banff Mountain Film Festival</option>
-                  <option>BASE editorial team</option>
-                  <option>Belinda Kirk</option>
-                  <option>Ben Horton</option>
-                  <option>Benjamin Sutton</option>
-                </select>
-              </div>
-              <!-- ALL PHOTOGRAPHERS -->
-              <div class="col-span-6 lg:col-span-3 border-b border-r relative">
-                <img src="images/camera-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <select name="photographers" id="photographers"
-                  class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
-                  <option>All Photographers</option>
-                  <option>Aaron Rolph</option>
-                  <option>Adam Boggon</option>
-                  <option>Aldo Kane</option>
-                  <option>Aled Bath</option>
-                  <option>Alex Metcalfe</option>
-                  <option>Alice Bowers</option>
-                  <option>Andreas B. Heide</option>
-                  <option>Ángel Pérez Grimaldi</option>
-                  <option>Angelo Concilio</option>
-                  <option>Banff Mountain Film Festival</option>
-                  <option>BASE editorial team</option>
-                  <option>Belinda Kirk</option>
-                </select>
-              </div>
-              <!-- KEYWORDS -->
-              <div class="col-span-6 lg:col-span-3 border-b border-r relative">
-                <img src="images/search-grey.svg" alt=""
-                  class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full">
-                <input type="text" name="keyword" id="keyword" placeholder="Keyword"
-                  class="text-[#766d66] font-['Jost',_sans-serif] h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none text-base sm:text-xl w-full">
-              </div>
-              <!-- FILTER BUTTON -->
-              <div class="col-span-12 lg:col-span-3 border-b border-r relative p-1">
-                <button type="submit"
-                  class="w-full h-full px-3 py-2 md:py-3 whitespace-nowrap rounded-md ease-[cubic-bezier(.4,0,.2,1)] transition-all uppercase text-[15px] bg-[#ff0020] text-white inline-flex items-center justify-center font-['Jost',_sans-serif] tracking-wider hover:bg-[#df1732]">
-                  Filter
-                  <span class="ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                      <path fill-rule="evenodd"
-                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                        clip-rule="evenodd"></path>
+                    <span
+                      x-show="!sideNav"
+                      class="text-sm"
+                      >MENU</span
+                    >
+                    <svg
+                      x-show="sideNav"
+                      class="w-6 h-6 fill-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512">
+                      <path
+                        d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
                     </svg>
-                  </span>
-                </button>
+                  </button>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
-          <!-- ---- -->
         </div>
-      </div>
-    </section>
-    <!-- END OF BANNER -->
-    <!-- HERO SECTION END -->
-    <!-- VISION SECTION START -->
-    <section x-data="{
+      </header>
+
+      <!-- HEADER END -->
+
+      <!-- HERO SECTION START -->
+      <!-- BANNER -->
+      <section class="pb-6">
+        <div class="relative px-4 md:px-8">
+          <div
+            class="absolute inset-y-0 w-5/6 xl:w-3/4 right-0 flex-grow">
+            <div
+              class="z-10 bg-slate-900/20 absolute w-full h-full"></div>
+            <img
+              class="absolute inset-0 object-cover w-full h-full"
+              src="images/pexels-lee-chinyama-9162116.jpg"
+              alt="hero" />
+          </div>
+          <div class="relative py-24 lg:pt-28 lg:pb-16 z-30">
+            <div class="relative inline-flex">
+              <div
+                class="w-screen right-20 md:right-72 inset-y-0 absolute bg-[#ff0020]"></div>
+              <div
+                class="relative max-w-3xl inline-flex sm:flex-shrink-0 flex-col items-start py-16 sm:py-20 lg:py-24 text-white">
+                <h2
+                  class="font-semibold text-4xl md:text-5xl xl:text-7xl !leading-[110%]">
+                  Buy. Sell. Rent. Lease. Win. WOW
+                </h2>
+                <div class="flex items-center gap-4 py-7">
+                  <!-- button 1 -->
+                  <a
+                    href="../mobWOW-buy/index.html"
+                    class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white after:transition-all border hover:border-white">
+                    buy
+                  </a>
+                  <!-- button 2 -->
+                  <a
+                    href="../mobWOW-sell/index.html"
+                    class="drop-shadow-2xl z-10 before:block before:absolute before:left-auto before:right-0 before:inset-y-0 before:-z-[1] before:bg-[#ff0020] before:w-0 hover:before:w-full hover:before:left-0 hover:before:right-auto before:transition-all leading-none px-[20px] py-[15px] uppercase font-medium text-[#ff0020] hover:text-white block text-[14px] xl:text-[16px] relative after:block after:absolute after:inset-0 after:-z-[2] after:bg-white after:transition-all border hover:border-white">
+                    sell
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- ---- -->
+            <div class="container mx-auto px-4 mt-16">
+              <form
+                class="w-full grid grid-cols-12 bg-white max-w-screen-xl xl:max-w-[1200px] mx-auto rounded-lg shadow-xl dark:shadow-2xl overflow-hidden">
+                <!-- ALL FEATURES -->
+                <div
+                  class="col-span-6 lg:col-span-4 border-b border-r relative">
+                  <img
+                    src="images/image-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <select
+                    name="feature"
+                    id="feature"
+                    class="w-full border-none h-12 md:h-14 p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif] bg-white">
+                    <option>All feature types</option>
+                    <option>Interview</option>
+                    <option>Photo Essay</option>
+                    <option>Spotlight</option>
+                    <option>Story</option>
+                    <option>Video</option>
+                  </select>
+                </div>
+                <!-- ALL ACTIVITY -->
+                <div
+                  class="col-span-6 lg:col-span-4 border-b border-r relative">
+                  <img
+                    src="images/skiing-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <select
+                    name="activity"
+                    id="activity"
+                    class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
+                    <option>All activity types</option>
+                    <option>Base Jumping</option>
+                    <option>Backpacking</option>
+                    <option>Biking</option>
+                    <option>Camping</option>
+                    <option>Conservation</option>
+                    <option>Cycling</option>
+                  </select>
+                </div>
+                <!-- ALL DESTINATIONS -->
+                <div
+                  class="col-span-6 lg:col-span-4 border-b border-r relative">
+                  <img
+                    src="images/map-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <select
+                    name="destination"
+                    id="destination"
+                    class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
+                    <option>All destinations</option>
+                    <option>Afghanistan</option>
+                    <option>Albania</option>
+                    <option>Andorra</option>
+                    <option>Antarctica</option>
+                    <option>Argentina</option>
+                    <option>Australia</option>
+                    <option>Pakistan</option>
+                  </select>
+                </div>
+                <!-- ALL AUTHORS -->
+                <div
+                  class="col-span-6 lg:col-span-3 border-b border-r relative">
+                  <img
+                    src="images/pen-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <select
+                    name="authors"
+                    id="authors"
+                    class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
+                    <option>All Authors</option>
+                    <option>Aaron Rolph</option>
+                    <option>Adam Boggon</option>
+                    <option>Aldo Kane</option>
+                    <option>Aled Bath</option>
+                    <option>Alex Metcalfe</option>
+                    <option>Alice Bowers</option>
+                    <option>Andreas B. Heide</option>
+                    <option>Ángel Pérez Grimaldi</option>
+                    <option>Angelo Concilio</option>
+                    <option>Banff Mountain Film Festival</option>
+                    <option>BASE editorial team</option>
+                    <option>Belinda Kirk</option>
+                    <option>Ben Horton</option>
+                    <option>Benjamin Sutton</option>
+                  </select>
+                </div>
+                <!-- ALL PHOTOGRAPHERS -->
+                <div
+                  class="col-span-6 lg:col-span-3 border-b border-r relative">
+                  <img
+                    src="images/camera-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <select
+                    name="photographers"
+                    id="photographers"
+                    class="w-full border-none h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none appearance-none text-base sm:text-xl bg-[url('../images/download.svg')] bg-no-repeat bg-[position:right_0.5rem_center] bg-[length:1.5em_1.5em] text-[#766d66] font-['Jost',_sans-serif]">
+                    <option>All Photographers</option>
+                    <option>Aaron Rolph</option>
+                    <option>Adam Boggon</option>
+                    <option>Aldo Kane</option>
+                    <option>Aled Bath</option>
+                    <option>Alex Metcalfe</option>
+                    <option>Alice Bowers</option>
+                    <option>Andreas B. Heide</option>
+                    <option>Ángel Pérez Grimaldi</option>
+                    <option>Angelo Concilio</option>
+                    <option>Banff Mountain Film Festival</option>
+                    <option>BASE editorial team</option>
+                    <option>Belinda Kirk</option>
+                  </select>
+                </div>
+                <!-- KEYWORDS -->
+                <div
+                  class="col-span-6 lg:col-span-3 border-b border-r relative">
+                  <img
+                    src="images/search-grey.svg"
+                    alt=""
+                    class="hidden sm:block h-6 absolute left-3 top-2/4 -translate-y-1/2 opacity-50 max-w-full" />
+                  <input
+                    type="text"
+                    name="keyword"
+                    id="keyword"
+                    placeholder="Keyword"
+                    class="text-[#766d66] font-['Jost',_sans-serif] h-12 md:h-14 bg-white p-2.5 sm:pl-12 outline-none focus:outline-none text-base sm:text-xl w-full" />
+                </div>
+                <!-- FILTER BUTTON -->
+                <div
+                  class="col-span-12 lg:col-span-3 border-b border-r relative p-1">
+                  <button
+                    type="submit"
+                    class="w-full h-full px-3 py-2 md:py-3 whitespace-nowrap rounded-md ease-[cubic-bezier(.4,0,.2,1)] transition-all uppercase text-[15px] bg-[#ff0020] text-white inline-flex items-center justify-center font-['Jost',_sans-serif] tracking-wider hover:bg-[#df1732]">
+                    Filter
+                    <span class="ml-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="w-5 h-5">
+                        <path
+                          fill-rule="evenodd"
+                          d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- ---- -->
+          </div>
+        </div>
+      </section>
+      <!-- END OF BANNER -->
+      <!-- HERO SECTION END -->
+      <!-- VISION SECTION START -->
+      <section
+        x-data="{
             tabs: [
               {
                 index: 0,
@@ -403,7 +506,8 @@
             setOpenOurVisionTabPanel: function(boolean) {
               this.openOurVisionTabPanel = boolean;
             }
-          }" x-init="function() {
+          }"
+        x-init="function() {
             const style = document.createElement('style');
           
             style.textContent = `
@@ -434,113 +538,148 @@
         
             document.head.appendChild(style);
           }"
-      class="font-['Poppins',_sans-serif] leading-[34px] text-[#868686] py-[70px] md:pb-[140px] xl:pt-[120px] xl:pb-60 bg-[#f6f6f6]">
-      <!-- CONTAINER -->
-      <div class="container mx-auto px-[15px] xl:max-w-[1200px]">
-        <!-- ROW -->
-        <div class="flex md:items-center xl:items-start flex-wrap -mx-[15px]">
-          <!-- COL ONE -->
-          <div class="basis-full md:basis-6/12 mb-[60px] xl:mb-0 px-[15px]">
-            <!-- SECTION HEADER -->
-            <div class="mb-[15px] md:mb-[30px]">
-              <!-- SECTION SUB-TITLE -->
-              <div class="mb-2.5">
-                <div class="relative inline-block">
-                  <!-- SECTION SUB-TITLE TEXT -->
-                  <span class="inline-block font-medium leading-4 uppercase tracking-[1.6px]">We're commited</span>
+        class="font-['Poppins',_sans-serif] leading-[34px] text-[#868686] py-[70px] md:pb-[140px] xl:pt-[120px] xl:pb-60 bg-[#f6f6f6]">
+        <!-- CONTAINER -->
+        <div class="container mx-auto px-[15px] xl:max-w-[1200px]">
+          <!-- ROW -->
+          <div
+            class="flex md:items-center xl:items-start flex-wrap -mx-[15px]">
+            <!-- COL ONE -->
+            <div
+              class="basis-full md:basis-6/12 mb-[60px] xl:mb-0 px-[15px]">
+              <!-- SECTION HEADER -->
+              <div class="mb-[15px] md:mb-[30px]">
+                <!-- SECTION SUB-TITLE -->
+                <div class="mb-2.5">
+                  <div class="relative inline-block">
+                    <!-- SECTION SUB-TITLE TEXT -->
+                    <span
+                      class="inline-block font-medium leading-4 uppercase tracking-[1.6px]"
+                      >We're commited</span
+                    >
 
-                  <!-- SECTION SUB-TITLE UNDERLINE -->
-                  <span class="absolute bottom-[8px] left-0 inline-block w-full h-[2px] bg-[#ff0020]"></span>
+                    <!-- SECTION SUB-TITLE UNDERLINE -->
+                    <span
+                      class="absolute bottom-[8px] left-0 inline-block w-full h-[2px] bg-[#ff0020]"></span>
+                  </div>
                 </div>
+
+                <!-- SECTION TITLE -->
+                <h2
+                  class="text-[30px] md:text-[40px] xl:text-[50px] font-bold leading-[40px] md:leading-[50px] xl:leading-[60px] text-[#151515]">
+                  A Company Involved in Servicing
+                </h2>
               </div>
 
-              <!-- SECTION TITLE -->
-              <h2
-                class="text-[30px] md:text-[40px] xl:text-[50px] font-bold leading-[40px] md:leading-[50px] xl:leading-[60px] text-[#151515]">
-                A Company Involved in Servicing
-              </h2>
+              <p class="text-[18px]">
+                There are many variations of passages of Lorem Ipsum
+                available, but the majority have suffered alteration
+                in some form, by injected humour, or randomised words
+                which don’t look even slightly believable.
+              </p>
             </div>
 
-            <p class="text-[18px]">
-              There are many variations of passages of Lorem Ipsum available,
-              but the majority have suffered alteration in some form, by
-              injected humour, or randomised words which don’t look even
-              slightly believable.
-            </p>
-          </div>
+            <!-- COL TWO -->
+            <div
+              class="basis-full md:basis-6/12 xl:basis-3/12 mb-[60px] xl:mb-0 px-[15px]">
+              <div
+                class="relative flex justify-center items-center md:max-h-[420px] xl:max-h-auto overflow-hidden">
+                <!-- COL TWO IMAGE -->
+                <img
+                  src="images/pexels-erik-mclean-5214413.jpg"
+                  alt="#"
+                  class="object-fill" />
 
-          <!-- COL TWO -->
-          <div class="basis-full md:basis-6/12 xl:basis-3/12 mb-[60px] xl:mb-0 px-[15px]">
-            <div class="relative flex justify-center items-center md:max-h-[420px] xl:max-h-auto overflow-hidden">
-              <!-- COL TWO IMAGE -->
-              <img src="images/pexels-erik-mclean-5214413.jpg" alt="#" class="object-fill" />
-
-              <!-- PLAY BUTTON -->
-              <button x-data="{
+                <!-- PLAY BUTTON -->
+                <button
+                  x-data="{
                       playBtnHovered: false,
     
                       setPlayBtnHovered: function(boolean) {
                         this.playBtnHovered = boolean;
                       }
-                    }" @mouseover="setPlayBtnHovered(true)" @mouseout="setPlayBtnHovered(false)" @click="function() {
+                    }"
+                  @mouseover="setPlayBtnHovered(true)"
+                  @mouseout="setPlayBtnHovered(false)"
+                  @click="function() {
                       setOpenModal(true);
                       document.body.classList.add('overflow-y-hidden');
                     }"
-                class="absolute top-1/2 left-1/2 block rounded-full border-0 w-[113px] h-[113px] text-center bg-[#ff0020] -translate-x-1/2 -translate-y-1/2 transition-all duration-[350ms] ease-linear before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border before:border-white before:rounded-full before:opacity-0 before:animate-[pulse-border_1.5s_linear_infinite] after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:border after:border-white after:rounded-full after:opacity-0 after:animate-[pulse-border-2_1s_linear_infinite]">
-                <!-- ICON -->
-                <span x-bind:class="playBtnHovered ? 'text-[#151515]' : 'text-white'"
-                  class="absolute top-1/2 left-1/2 inline-block text-[24px] -translate-x-1/2 -translate-y-1/2 transition-color duration-300 ease-linear">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path fill-rule="evenodd"
-                      d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                      clip-rule="evenodd" />
-                  </svg>
-                </span>
-              </button>
-            </div>
+                  class="absolute top-1/2 left-1/2 block rounded-full border-0 w-[113px] h-[113px] text-center bg-[#ff0020] -translate-x-1/2 -translate-y-1/2 transition-all duration-[350ms] ease-linear before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border before:border-white before:rounded-full before:opacity-0 before:animate-[pulse-border_1.5s_linear_infinite] after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:border after:border-white after:rounded-full after:opacity-0 after:animate-[pulse-border-2_1s_linear_infinite]">
+                  <!-- ICON -->
+                  <span
+                    x-bind:class="playBtnHovered ? 'text-[#151515]' : 'text-white'"
+                    class="absolute top-1/2 left-1/2 inline-block text-[24px] -translate-x-1/2 -translate-y-1/2 transition-color duration-300 ease-linear">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="w-6 h-6">
+                      <path
+                        fill-rule="evenodd"
+                        d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
 
-            <!-- MODAL -->
-            <div @click="function() {
+              <!-- MODAL -->
+              <div
+                @click="function() {
                     window.onclick = function(event) {
                       if(event.target === $el) {
                         setOpenModal(false);
                         document.body.classList.remove('overflow-y-hidden');
                       }
                     }
-                  }" x-bind:class="openModal ? 'block' : 'hidden'"
-              class="fixed top-0 left-0 flex justify-center items-center p-[15px] sm:p-[30px] lg:p-10 w-full h-full bg-black/40 z-50">
-              <div class="w-full max-w-[900px] h-[200px] sm:h-[330px] md:h-[400px] lg:h-[500px] cursor-pointer">
-                <iframe src="https://www.youtube.com/embed/-Oox2w5sMcA" title="Starship Animation" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen class="w-full h-full"></iframe>
+                  }"
+                x-bind:class="openModal ? 'block' : 'hidden'"
+                class="fixed top-0 left-0 flex justify-center items-center p-[15px] sm:p-[30px] lg:p-10 w-full h-full bg-black/40 z-50">
+                <div
+                  class="w-full max-w-[900px] h-[200px] sm:h-[330px] md:h-[400px] lg:h-[500px] cursor-pointer">
+                  <iframe
+                    src="https://www.youtube.com/embed/-Oox2w5sMcA"
+                    title="Starship Animation"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="w-full h-full"></iframe>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- COL THREE -->
-          <div class="basis-full md:basis-full xl:basis-3/12 px-[15px]">
-            <!-- TABS - LG SCREENS AND ABOVE(1024PX) -->
-            <div class="hidden md:block">
-              <!-- TAB BUTTONS -->
-              <div class="mb-[30px]">
+            <!-- COL THREE -->
+            <div
+              class="basis-full md:basis-full xl:basis-3/12 px-[15px]">
+              <!-- TABS - LG SCREENS AND ABOVE(1024PX) -->
+              <div class="hidden md:block">
+                <!-- TAB BUTTONS -->
+                <div class="mb-[30px]">
+                  <template x-for="tab in tabs">
+                    <!-- TAB BUTTON -->
+                    <button
+                      @click="setActiveTabIndex(tab.index)"
+                      x-text="tab.title"
+                      x-bind:class="tab.index === activeTabIndex ? 'text-white bg-[#ff0020]' : 'text-[#151515] bg-transparent'"
+                      class="inline-block border-t-2 border-[#ff0020] py-5 px-2.5 text-[14px] font-bold leading-[14px] text-center last:ml-2.5 transition-all duration-150 ease-linear"></button
+                  ></template>
+                </div>
+
+                <!-- TAB CONTENT -->
+                <p x-text="tabs[activeTabIndex].description"></p>
+              </div>
+
+              <!-- TABS - UPTO LG SCREENS(1023PX) -->
+              <div class="block md:hidden">
                 <template x-for="tab in tabs">
-                  <!-- TAB BUTTON -->
-                  <button @click="setActiveTabIndex(tab.index)" x-text="tab.title"
-                    x-bind:class="tab.index === activeTabIndex ? 'text-white bg-[#ff0020]' : 'text-[#151515] bg-transparent'"
-                    class="inline-block border-t-2 border-[#ff0020] py-5 px-2.5 text-[14px] font-bold leading-[14px] text-center last:ml-2.5 transition-all duration-150 ease-linear"></button></template>
-              </div>
-
-              <!-- TAB CONTENT -->
-              <p x-text="tabs[activeTabIndex].description"></p>
-            </div>
-
-            <!-- TABS - UPTO LG SCREENS(1023PX) -->
-            <div class="block md:hidden">
-              <template x-for="tab in tabs">
-                <!-- TAB -->
-                <div x-bind:class="tab.index === activeTabIndex ? 'mb-10' : 'mb-0'" class="last:mb-0">
-                  <!-- TAB BUTTON -->
-                  <button @click="function() {
+                  <!-- TAB -->
+                  <div
+                    x-bind:class="tab.index === activeTabIndex ? 'mb-10' : 'mb-0'"
+                    class="last:mb-0">
+                    <!-- TAB BUTTON -->
+                    <button
+                      @click="function() {
                           setActiveTabIndex(tab.index);
     
                           if(tab.title === 'Our Mission') {
@@ -550,28 +689,33 @@
                             setOpenOurVisionTabPanel(true);
                             setOpenOurMissionTabPanel(false);
                           }
-                        }" x-text="tab.title"
-                    x-bind:class="tab.index === activeTabIndex ? 'text-white bg-[#ff0020]' : 'text-[#151515] bg-transparent'"
-                    class="block border-t-2 border-[#ff0020] p-2.5 lg:py-5 lg:px-2.5 w-full text-[14px] font-normal lg:font-bold lg:leading-[14px] text-left last:ml-2.5 transition-all duration-150 ease-linear"></button>
+                        }"
+                      x-text="tab.title"
+                      x-bind:class="tab.index === activeTabIndex ? 'text-white bg-[#ff0020]' : 'text-[#151515] bg-transparent'"
+                      class="block border-t-2 border-[#ff0020] p-2.5 lg:py-5 lg:px-2.5 w-full text-[14px] font-normal lg:font-bold lg:leading-[14px] text-left last:ml-2.5 transition-all duration-150 ease-linear"></button>
 
-                  <!-- TAB CONTENT -->
-                  <p x-show="function() {
+                    <!-- TAB CONTENT -->
+                    <p
+                      x-show="function() {
                           if(tab.title === 'Our Mission') {
                             return openOurMissionTabPanel;
                           } else {
                             return openOurVisionTabPanel;
                           }
-                        }" x-text="tabs[activeTabIndex].description" class="pt-[30px]"></p>
-                </div>
-              </template>
+                        }"
+                      x-text="tabs[activeTabIndex].description"
+                      class="pt-[30px]"></p>
+                  </div>
+                </template>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- VISION SECTION END -->
-    <!-- CARDS SECTION START -->
-    <section x-data="{
+      </section>
+      <!-- VISION SECTION END -->
+      <!-- CARDS SECTION START -->
+      <section
+        x-data="{
             items: [{
               id: 1,
               title: 'Automotive Manufacturing',
@@ -608,7 +752,8 @@
           setItemHoveredId: function(itemId) {
             this.itemHoveredId = itemId;
           }
-        }" x-init="function() {
+        }"
+        x-init="function() {
           const style = document.createElement('style');
         
           style.textContent = `
@@ -624,23 +769,27 @@
       
           document.head.appendChild(style);
         }"
-      class="font-['Poppins',_sans-serif] leading-[34px] text-[#868686] md:-mt-[70px] xl:-mt-[120px] py-[70px] md:pt-0 xl:pb-[120px]">
-      <!-- CONTAINER -->
-      <div class="container mx-auto px-[15px] xl:max-w-[1200px]">
-        <!-- ROW -->
-        <div class="flex flex-wrap -mx-[15px]">
-          <template x-for="item in items">
-            <!-- COL -->
-            <div class="basis-full md:basis-6/12 xl:basis-3/12 mb-[30px] xl:mb-0 px-[15px]">
-              <!-- ITEM -->
-              <div @mouseover="function() {
+        class="font-['Poppins',_sans-serif] leading-[34px] text-[#868686] md:-mt-[70px] xl:-mt-[120px] py-[70px] md:pt-0 xl:pb-[120px]">
+        <!-- CONTAINER -->
+        <div class="container mx-auto px-[15px] xl:max-w-[1200px]">
+          <!-- ROW -->
+          <div class="flex flex-wrap -mx-[15px]">
+            <template x-for="item in items">
+              <!-- COL -->
+              <div
+                class="basis-full md:basis-6/12 xl:basis-3/12 mb-[30px] xl:mb-0 px-[15px]">
+                <!-- ITEM -->
+                <div
+                  @mouseover="function() {
                       setItemHoveredId(item.id);
-                    }" @mouseout="function() {
+                    }"
+                  @mouseout="function() {
                       setItemHoveredId(null);
                     }"
-                class="shadow-[0px_10px_60px_0px_rgba(0,0,0,0.07)] py-[30px] px-[15px] md:p-[50px] md:pb-[45px] h-full text-center bg-white">
-                <!-- ITEM ICON -->
-                <span x-bind:class="function() {
+                  class="shadow-[0px_10px_60px_0px_rgba(0,0,0,0.07)] py-[30px] px-[15px] md:p-[50px] md:pb-[45px] h-full text-center bg-white">
+                  <!-- ITEM ICON -->
+                  <span
+                    x-bind:class="function() {
                         if(item.id === 2) {
                           if(itemHoveredId === 2) {
                             return 'after:bg-[#f6f6f6] after:opacity-1 after:scale-[1.01]';
@@ -655,8 +804,9 @@
                           return 'bg-[#f6f6f6] after:bg-[#020101] after:opacity-0 after:scale-[1.2]';
                         }
                       }"
-                  class="relative inline-block rounded-full mb-[35px] p-2.5 pt-[25px] w-[109px] h-[109px] transition-all duration-[350ms] ease-linear after:content-[''] after:absolute after:top-0 after:left-0 after:block after:rounded-full after:w-full after:h-full after:transition-all after:duration-[350ms] after:ease-linear">
-                  <img x-bind:src="function() {
+                    class="relative inline-block rounded-full mb-[35px] p-2.5 pt-[25px] w-[109px] h-[109px] transition-all duration-[350ms] ease-linear after:content-[''] after:absolute after:top-0 after:left-0 after:block after:rounded-full after:w-full after:h-full after:transition-all after:duration-[350ms] after:ease-linear">
+                    <img
+                      x-bind:src="function() {
                           if(item.id === 2) {
                             if(itemHoveredId === 2) {
                               return item.icons.iconOrange;
@@ -670,47 +820,58 @@
     
                             return item.icons.iconOrange
                           }
-                        }" x-bind:class="item.id === itemHoveredId && 'animate-[beat_1.5s_ease_0s_infinite]'" alt="#"
-                    class="relative z-10 mx-auto" />
-                </span>
+                        }"
+                      x-bind:class="item.id === itemHoveredId && 'animate-[beat_1.5s_ease_0s_infinite]'"
+                      alt="#"
+                      class="relative z-10 mx-auto" />
+                  </span>
 
-                <!-- ITEM TITLE -->
-                <h3 x-text="item.title" class="mb-[15px] text-xl font-bold leading-[1.4] text-[#151515]"></h3>
+                  <!-- ITEM TITLE -->
+                  <h3
+                    x-text="item.title"
+                    class="mb-[15px] text-xl font-bold leading-[1.4] text-[#151515]"></h3>
 
-                <!-- ITEM DESCRIPTION -->
-                <p x-text="item.description" class="text-base leading-8"></p>
+                  <!-- ITEM DESCRIPTION -->
+                  <p
+                    x-text="item.description"
+                    class="text-base leading-8"></p>
+                </div>
               </div>
-            </div>
-          </template>
+            </template>
 
-          <!-- COL FOUR -->
-          <div class="basis-full md:basis-6/12 xl:basis-3/12 md:mb-[30px] xl:mb-0 px-[15px]">
-            <!-- ITEM -->
+            <!-- COL FOUR -->
             <div
-              class="relative flex justify-center items-center py-[60px] px-[15px] md:p-0 h-full bg-[url('/assets/images/section-three/img.jpg')] bg-no-repeat bg-cover bg-center after:content[''] after:absolute after:top-0 after:left-0 after:block after:w-full after:h-full after:bg-[#ff0020]/90">
-              <div class="relative flex flex-col items-center z-10">
-                <!-- ITEM TITLE -->
-                <h2 class="p-[30px] text-[26px] font-bold leading-9 text-center text-white">
-                  We’re providing technical solution
-                </h2>
+              class="basis-full md:basis-6/12 xl:basis-3/12 md:mb-[30px] xl:mb-0 px-[15px]">
+              <!-- ITEM -->
+              <div
+                class="relative flex justify-center items-center py-[60px] px-[15px] md:p-0 h-full bg-[url('/assets/images/section-three/img.jpg')] bg-no-repeat bg-cover bg-center after:content[''] after:absolute after:top-0 after:left-0 after:block after:w-full after:h-full after:bg-[#ff0020]/90">
+                <div class="relative flex flex-col items-center z-10">
+                  <!-- ITEM TITLE -->
+                  <h2
+                    class="p-[30px] text-[26px] font-bold leading-9 text-center text-white">
+                    We’re providing technical solution
+                  </h2>
 
-                <!-- GET A FREE QUOTE LINK -->
-                <a href="#"
-                  class="inline-block py-[18px] px-[30px] text-[12px] font-medium leading-[12px] tracking-[1.2px] uppercase text-center text-white bg-[#151515] transition-all duration-300 ease-linear">Get
-                  a free quote
-                </a>
+                  <!-- GET A FREE QUOTE LINK -->
+                  <a
+                    href="#"
+                    class="inline-block py-[18px] px-[30px] text-[12px] font-medium leading-[12px] tracking-[1.2px] uppercase text-center text-white bg-[#151515] transition-all duration-300 ease-linear"
+                    >Get a free quote
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- CARDS SECTION END -->
-    <!-- LATEST POSTS SECTION START -->
-    <!-- EXPLORE BY TYPES -->
-    <section>
-      <div class="container mt-8 py-14 mx-auto px-[15px] xl:max-w-[1200px]">
-        <div x-data="{
+      </section>
+      <!-- CARDS SECTION END -->
+      <!-- LATEST POSTS SECTION START -->
+      <!-- EXPLORE BY TYPES -->
+      <section>
+        <div
+          class="container mt-8 py-14 mx-auto px-[15px] xl:max-w-[1200px]">
+          <div
+            x-data="{
                           skip : 1,
                           next(){
                             this.scrollingTo((currentscrolledposition, offset) => currentscrolledposition + (offset * this.skip))
@@ -727,734 +888,1101 @@
                             
                             slider.scrollTo({ left: direction(currentscrolledposition, offset), behavior: 'smooth' })
                           }
-                        }" class="flow-root">
-          <div @keydown.right="next" @keydown.left="prev" tabindex="0"
-            class="relative flex flex-col sm:flex-row sm:items-end justify-between mb-12 lg:mb-16 text-neutral-900 dark:text-neutral-50 container mx-auto px-[15px] xl:max-w-[1200px] md:items-center">
-            <div class="max-w-2xl">
-              <h2
-                class=" max-w-[33.75rem] text-3xl sm:text-4xl md:text-[2.7rem] !leading-tight lg:max-w-[45.625rem] text-black">
-                Latest posts
-              </h2>
-              <!-- CAPTION -->
-              <span class="my-2 md:my-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
-                Check what our users are selling
-              </span>
-              <!-- DIVIDER -->
-              <hr class="w-12 h-1.5 rounded-full border-none mb-6 bg-[#ff0020]">
-            </div>
-            <div class="mt-4 flex justify-end sm:ml-2 sm:mt-0 flex-shrink-0">
-              <div class="relative flex items-center text-neutral-900 dark:text-neutral-300">
-                <button @click="prev"
-                  class="w-10 h-10 mr-[6px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-600 hover:text-white hover:bg-[#ff0020] dark:hover:border-neutral-500 rounded-full flex items-center justify-center hover:border-neutral-300 focus:outline-none transition-all"
-                  title="Prev" data-glide-dir="<">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clip-rule="evenodd" />
-                  </svg>
-                </button>
-
-                <button @click="next"
-                  class="w-10 h-10 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-600 dark:hover:border-neutral-500 rounded-full flex items-center justify-center hover:border-neutral-300 focus:outline-none hover:text-white hover:bg-[#ff0020] transition-all"
-                  title="Next" data-glide-dir=">">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd" />
-                  </svg>
-                </button>
+                        }"
+            class="flow-root">
+            <div
+              @keydown.right="next"
+              @keydown.left="prev"
+              tabindex="0"
+              class="relative flex flex-col sm:flex-row sm:items-end justify-between mb-12 lg:mb-16 text-neutral-900 dark:text-neutral-50 container mx-auto px-[15px] xl:max-w-[1200px] md:items-center">
+              <div class="max-w-2xl">
+                <h2
+                  class="max-w-[33.75rem] text-3xl sm:text-4xl md:text-[2.7rem] !leading-tight lg:max-w-[45.625rem] text-black">
+                  Latest posts
+                </h2>
+                <!-- CAPTION -->
+                <span
+                  class="my-2 md:my-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
+                  Check what our users are selling
+                </span>
+                <!-- DIVIDER -->
+                <hr
+                  class="w-12 h-1.5 rounded-full border-none mb-6 bg-[#ff0020]" />
               </div>
-            </div>
-          </div>
-          <div>
-            <ul x-ref="slider" tabindex="0" class="flex w-full overflow-hidden snap-mandatory snap-x">
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore1.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore2.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore3.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore4.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore6.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore1.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore2.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore3.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore4.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-              <li
-                class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-                <a class="flex flex-col" href="#">
-                  <div class="relative rounded-2xl overflow-hidden group">
-                    <div class="aspect-[4/3]">
-                      <img src="./images/explore6.jpeg" class="rounded-2xl object-center w-full h-full" alt="nc-imgs" />
-                    </div>
-                    <span
-                      class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
-                    </span>
-                  </div>
-                  <div class="mt-4 px-3 truncate">
-                    <h2 class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
-                      Nature House 1
-                    </h2>
-                    <span class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      17,288 properties
-                    </span>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- LATEST POSTS SECTION END -->
-    <!-- BLOG POSTS SECTION START -->
-    <section class="bg-[#f7f5ff]">
-      <div class="container max-w-[120rem] px-8 md:px-12 lg:px-24 mx-auto text-[#494b7a]">
-        <!-- SECTION HEADING BOX -->
-        <div class="lg:pt-10 pt-4 flex flex-col text-left items-start">
-          <!-- SECTION HEADING -->
-          <h2
-            class="max-w-[33.75rem] text-3xl sm:text-4xl md:text-[2.7rem] !leading-tight lg:max-w-[45.625rem] text-black">
-            Blog posts
-          </h2>
-          <!-- CAPTION -->
-          <span class="my-2 md:my-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
-            Read how we do certain things
-          </span>
-          <!-- DIVIDER -->
-          <hr class="w-12 h-1.5 rounded-full border-none mb-6 bg-[#ff0020]">
-        </div>
-        <!-- BLOG POSTS -->
-        <div class="container max-w-5xl mx-auto px-3 py-8">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- BLOG -->
-            <div class=" relative group shadow-[0_1px_6px_rgb(0_0_0_/_12%),_0_1px_4px_rgb(0_0_0_/_24%)]
-            hover:shadow-[0_10px_30px_rgba(0,0,0,0.19),_0_6px_10px_rgba(0,0,0,0.23)] transition-all duration-500
-            ease-[ease]">
-              <div class="aspect-[3/2] overflow-hidden relative">
-                <img class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-[ease]"
-                  src="images/pexels-erik-mclean-5214413.jpg" alt="">
+              <div
+                class="mt-4 flex justify-end sm:ml-2 sm:mt-0 flex-shrink-0">
                 <div
-                  class="absolute top-0 left-0 w-full h-full bg-black/20 group-hover:bg-black/10 transition-all duration-500 ease-[ease]">
+                  class="relative flex items-center text-neutral-900 dark:text-neutral-300">
+                  <button
+                    @click="prev"
+                    class="w-10 h-10 mr-[6px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-600 hover:text-white hover:bg-[#ff0020] dark:hover:border-neutral-500 rounded-full flex items-center justify-center hover:border-neutral-300 focus:outline-none transition-all"
+                    title="Prev"
+                    data-glide-dir="<">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor">
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </button>
+
+                  <button
+                    @click="next"
+                    class="w-10 h-10 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-600 dark:hover:border-neutral-500 rounded-full flex items-center justify-center hover:border-neutral-300 focus:outline-none hover:text-white hover:bg-[#ff0020] transition-all"
+                    title="Next"
+                    data-glide-dir=">">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor">
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
               </div>
-              <div class="text-center md:text-left pt-6 pb-8 px-4">
-                <time
-                  class="absolute top-4 right-4 w-14 h-14 text-white bg-[#ff0020] text-center font-bold flex items-center justify-center">
-                  <div>
-                    <span class="block text-lg leading-none mb-1">03</span>
-                    <span class="block text-xs leading-none">MAY</span>
-                  </div>
-                </time>
-                <div class="text-xs text-gray-500 uppercase font-bold mb-4">
-                  <a href="#" class="hover:text-[#ff0020] transition-all">#Cars</a>
-                  <a href="#" class="hover:text-[#ff0020] transition-all">#Modifications</a>
+            </div>
+            <div>
+              <ul
+                x-ref="slider"
+                tabindex="0"
+                class="flex w-full overflow-hidden snap-mandatory snap-x">
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class=""
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore1.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore2.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore3.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore4.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore6.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore1.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore2.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore3.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore4.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li
+                  class="flex-shrink-0 flex flex-col items-center justify-center p-2 snap-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <a
+                    class="flex flex-col"
+                    href="#">
+                    <div
+                      class="relative rounded-2xl overflow-hidden group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src="./images/explore6.jpeg"
+                          class="rounded-2xl object-center w-full h-full"
+                          alt="nc-imgs" />
+                      </div>
+                      <span
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity">
+                      </span>
+                    </div>
+                    <div class="mt-4 px-3 truncate">
+                      <h2
+                        class="text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate">
+                        Nature House 1
+                      </h2>
+                      <span
+                        class="block mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        17,288 properties
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- LATEST POSTS SECTION END -->
+      <!-- BLOG POSTS SECTION START -->
+      <section class="bg-[#f7f5ff]">
+        <div
+          class="container max-w-[120rem] px-8 md:px-12 lg:px-24 mx-auto text-[#494b7a]">
+          <!-- SECTION HEADING BOX -->
+          <div
+            class="lg:pt-10 pt-4 flex flex-col text-left items-start">
+            <!-- SECTION HEADING -->
+            <h2
+              class="max-w-[33.75rem] text-3xl sm:text-4xl md:text-[2.7rem] !leading-tight lg:max-w-[45.625rem] text-black">
+              Blog posts
+            </h2>
+            <!-- CAPTION -->
+            <span
+              class="my-2 md:my-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
+              Read how we do certain things
+            </span>
+            <!-- DIVIDER -->
+            <hr
+              class="w-12 h-1.5 rounded-full border-none mb-6 bg-[#ff0020]" />
+          </div>
+          <!-- BLOG POSTS -->
+          <div class="container max-w-5xl mx-auto px-3 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- BLOG -->
+              <div
+                class="relative group shadow-[0_1px_6px_rgb(0_0_0_/_12%),_0_1px_4px_rgb(0_0_0_/_24%)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.19),_0_6px_10px_rgba(0,0,0,0.23)] transition-all duration-500 ease-[ease]">
+                <div class="aspect-[3/2] overflow-hidden relative">
+                  <img
+                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-[ease]"
+                    src="images/pexels-erik-mclean-5214413.jpg"
+                    alt="" />
+                  <div
+                    class="absolute top-0 left-0 w-full h-full bg-black/20 group-hover:bg-black/10 transition-all duration-500 ease-[ease]"></div>
                 </div>
-                <h3 class="text-xl text-gray-700 hover:text-[#ff0020] font-bold mb-2 transition-all">
-                  <a class="text-current uppercase transition-all" href="#">Lorem, ipsum dolor.</a>
-                </h3>
-                <p class="text-sm text-gray-400">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dicta perspiciatis culpa veritatis
-                  molestias asperiores temporibus debitis!
+                <div class="text-center md:text-left pt-6 pb-8 px-4">
+                  <time
+                    class="absolute top-4 right-4 w-14 h-14 text-white bg-[#ff0020] text-center font-bold flex items-center justify-center">
+                    <div>
+                      <span class="block text-lg leading-none mb-1"
+                        >03</span
+                      >
+                      <span class="block text-xs leading-none"
+                        >MAY</span
+                      >
+                    </div>
+                  </time>
+                  <div
+                    class="text-xs text-gray-500 uppercase font-bold mb-4">
+                    <a
+                      href="#"
+                      class="hover:text-[#ff0020] transition-all"
+                      >#Cars</a
+                    >
+                    <a
+                      href="#"
+                      class="hover:text-[#ff0020] transition-all"
+                      >#Modifications</a
+                    >
+                  </div>
+                  <h3
+                    class="text-xl text-gray-700 hover:text-[#ff0020] font-bold mb-2 transition-all">
+                    <a
+                      class="text-current uppercase transition-all"
+                      href="#"
+                      >Lorem, ipsum dolor.</a
+                    >
+                  </h3>
+                  <p class="text-sm text-gray-400">
+                    Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Eum dicta perspiciatis culpa veritatis
+                    molestias asperiores temporibus debitis!
+                  </p>
+                </div>
+              </div>
+
+              <!-- BLOG -->
+              <div
+                class="relative group shadow-[0_1px_6px_rgb(0_0_0_/_12%),_0_1px_4px_rgb(0_0_0_/_24%)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.19),_0_6px_10px_rgba(0,0,0,0.23)] transition-all duration-500 ease-[ease]">
+                <div class="aspect-[3/2] overflow-hidden relative">
+                  <img
+                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-[ease]"
+                    src="images/hero.jpg"
+                    alt="" />
+                  <div
+                    class="absolute top-0 left-0 w-full h-full bg-black/20 group-hover:bg-black/10 transition-all duration-500 ease-[ease]"></div>
+                </div>
+                <div class="text-center md:text-left pt-6 pb-8 px-4">
+                  <time
+                    class="absolute top-4 right-4 w-14 h-14 text-white bg-[#ff0020] text-center font-bold flex items-center justify-center">
+                    <div>
+                      <span class="block text-lg leading-none mb-1"
+                        >03</span
+                      >
+                      <span class="block text-xs leading-none"
+                        >MAY</span
+                      >
+                    </div>
+                  </time>
+                  <div
+                    class="text-xs text-gray-500 uppercase font-bold mb-4">
+                    <a
+                      href="#"
+                      class="hover:text-[#ff0020] transition-all"
+                      >#Cars</a
+                    >
+                    <a
+                      href="#"
+                      class="hover:text-[#ff0020] transition-all"
+                      >#Repairs</a
+                    >
+                  </div>
+                  <h3
+                    class="text-xl text-gray-700 hover:text-[#ff0020] font-bold mb-2 transition-all">
+                    <a
+                      class="text-current uppercase transition-all"
+                      href="#"
+                      >Lorem, ipsum dolor.</a
+                    >
+                  </h3>
+                  <p class="text-sm text-gray-400">
+                    Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Obcaecati cum minima nisi animi a
+                    reprehenderit dolore perferendis ab asperiores
+                    quo.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- BLOG POSTS SECTION END -->
+      <!-- FAQ SECTION START -->
+      <section class="bg-[#f2f2f2]">
+        <div
+          class="container max-w-screen-xl mx-auto py-20 px-4 font-['Roboto']">
+          <div
+            x-data="{selected: null}"
+            class="md:flex md:items-center lg:items-start">
+            <div
+              class="hidden md:block md:flex-none md:w-1/2 relative">
+              <div class="w-[40%] mx-auto">
+                <img
+                  src="images/faq.webp"
+                  alt=""
+                  class="object-cover w-full h-full" />
+              </div>
+            </div>
+
+            <div class="md:flex-none md:w-1/2">
+              <!-- HEADING BOX -->
+              <div class="w-full">
+                <h2
+                  class="text-black/75 uppercase text-3xl md:text-4xl">
+                  STILL HAVE QUESTIONS?
+                </h2>
+                <p class="text-[#666666] font-semibold text-xl">
+                  We've got answers
                 </p>
               </div>
-            </div>
-
-            <!-- BLOG -->
-            <div class=" relative group shadow-[0_1px_6px_rgb(0_0_0_/_12%),_0_1px_4px_rgb(0_0_0_/_24%)]
-                        hover:shadow-[0_10px_30px_rgba(0,0,0,0.19),_0_6px_10px_rgba(0,0,0,0.23)] transition-all duration-500
-                        ease-[ease]">
-              <div class="aspect-[3/2] overflow-hidden relative">
-                <img class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-[ease]"
-                  src="images/hero.jpg" alt="">
-                <div
-                  class="absolute top-0 left-0 w-full h-full bg-black/20 group-hover:bg-black/10 transition-all duration-500 ease-[ease]">
-                </div>
-              </div>
-              <div class="text-center md:text-left pt-6 pb-8 px-4">
-                <time
-                  class="absolute top-4 right-4 w-14 h-14 text-white bg-[#ff0020] text-center font-bold flex items-center justify-center">
-                  <div>
-                    <span class="block text-lg leading-none mb-1">03</span>
-                    <span class="block text-xs leading-none">MAY</span>
-                  </div>
-                </time>
-                <div class="text-xs text-gray-500 uppercase font-bold mb-4">
-                  <a href="#" class="hover:text-[#ff0020] transition-all">#Cars</a>
-                  <a href="#" class="hover:text-[#ff0020] transition-all">#Repairs</a>
-                </div>
-                <h3 class="text-xl text-gray-700 hover:text-[#ff0020] font-bold mb-2 transition-all">
-                  <a class="text-current uppercase transition-all" href="#">Lorem, ipsum dolor.</a>
-                </h3>
-                <p class="text-sm text-gray-400">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati cum minima nisi animi a
-                  reprehenderit dolore perferendis ab asperiores quo.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- BLOG POSTS SECTION END -->
-    <!-- FAQ SECTION START -->
-    <section class="bg-[#f2f2f2]">
-      <div class="container max-w-screen-xl mx-auto py-20 px-4 font-['Roboto']">
-        <div x-data="{selected: null}" class="md:flex md:items-center lg:items-start">
-          <div class="hidden md:block md:flex-none md:w-1/2 relative">
-            <div class="w-[40%] mx-auto">
-              <img src="images/faq.webp" alt="" class="object-cover w-full h-full">
-            </div>
-          </div>
-
-          <div class="md:flex-none md:w-1/2">
-            <!-- HEADING BOX -->
-            <div class="w-full">
-              <h2 class="text-black/75 uppercase text-3xl md:text-4xl">STILL HAVE QUESTIONS?</h2>
-              <p class="text-[#666666] font-semibold text-xl">We've got answers
-              </p>
-            </div>
-            <ul class="accordion pt-8">
-              <li class="relative border-b border-gray-200 transition-all duration-300"
-                :class="{ 'bg-gray-100 md:rounded-lg': selected == 1 }">
-                <button type="button" class="w-full px-6 py-6" @click="selected !== 1 ? selected = 1 : selected = null">
-                  <div class="flex items-center text-left justify-between">
-                    <span class="text-gray-700 font-medium text-lg">How much can I invest?</span>
-                    <span class="text-[#ff0020]">
-                      <svg class="svg-icon transition-all duration-300" :class="{ 'rotate-180': selected === 1 }"
-                        width="31" height="31" viewBox="0 0 30.33 30.27" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>ORGANIZE YOUR WAY</title>
-                        <path class="st0" d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
+              <ul class="accordion pt-8">
+                <li
+                  class="relative border-b border-gray-200 transition-all duration-300"
+                  :class="{ 'bg-gray-100 md:rounded-lg': selected == 1 }">
+                  <button
+                    type="button"
+                    class="w-full px-6 py-6"
+                    @click="selected !== 1 ? selected = 1 : selected = null">
+                    <div
+                      class="flex items-center text-left justify-between">
+                      <span class="text-gray-700 font-medium text-lg"
+                        >How much can I invest?</span
+                      >
+                      <span class="text-[#ff0020]">
+                        <svg
+                          class="svg-icon transition-all duration-300"
+                          :class="{ 'rotate-180': selected === 1 }"
+                          width="31"
+                          height="31"
+                          viewBox="0 0 30.33 30.27"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>ORGANIZE YOUR WAY</title>
+                          <path
+                            class="st0"
+                            d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
                           l4.6,4.6l4.6-4.6l1.4,1.4L15,18.7z"></path>
-                      </svg>
-                    </span>
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div
+                    class="relative overflow-hidden transition-all max-h-0 duration-700"
+                    x-bind:style="selected == 1 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
+                    <div class="px-8 pb-8 text-[#545454] text-sm">
+                      <p>
+                        With Regulation A+, a non-accredited investor
+                        can only invest a maximum of 10% of their
+                        annual income or 10% of their net worth per
+                        year, whichever is greater. There are no
+                        restrictions for accredited investors.
+                        <br />
+                        <br />
+                        With Regulation Crowdfunding, non-accredited
+                        investors with an annual income or net worth
+                        less than $124,000, are limited to invest a
+                        maximum of 5% of the greater of those two
+                        amounts. For those with an annual income and
+                        net worth greater than $124,000, he/she is
+                        limited to investing 10% of the greater of the
+                        two amounts.
+                      </p>
+                    </div>
                   </div>
-                </button>
-                <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                  x-bind:style="selected == 1 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
-                  <div class="px-8 pb-8 text-[#545454] text-sm">
-                    <p>With Regulation A+, a non-accredited investor can only invest a maximum of 10% of their annual
-                      income or 10% of their
-                      net worth per year, whichever is greater. There are no restrictions for accredited investors.
-                      <br>
-                      <br>
-                      With Regulation Crowdfunding, non-accredited investors with an annual income or net worth less
-                      than
-                      $124,000, are
-                      limited to invest a maximum of 5% of the greater of those two amounts. For those with an annual
-                      income and net worth
-                      greater than $124,000, he/she is limited to investing 10% of the greater of the two amounts.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="relative border-b border-gray-200 transition-all duration-300"
-                :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
-                <button type="button" class="w-full px-6 py-6" @click="selected !== 2 ? selected = 2 : selected = null">
-                  <div class="flex items-center text-left justify-between">
-                    <span class="text-gray-700 font-medium text-lg">When will I receive my shares?</span>
-                    <span class="text-[#ff0020]">
-                      <svg class="svg-icon transition-all duration-300" :class="{ 'rotate-180': selected === 2 }"
-                        width="31" height="31" viewBox="0 0 30.33 30.27" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>ORGANIZE YOUR WAY</title>
-                        <path class="st0" d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
+                </li>
+                <li
+                  class="relative border-b border-gray-200 transition-all duration-300"
+                  :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
+                  <button
+                    type="button"
+                    class="w-full px-6 py-6"
+                    @click="selected !== 2 ? selected = 2 : selected = null">
+                    <div
+                      class="flex items-center text-left justify-between">
+                      <span class="text-gray-700 font-medium text-lg"
+                        >When will I receive my shares?</span
+                      >
+                      <span class="text-[#ff0020]">
+                        <svg
+                          class="svg-icon transition-all duration-300"
+                          :class="{ 'rotate-180': selected === 2 }"
+                          width="31"
+                          height="31"
+                          viewBox="0 0 30.33 30.27"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>ORGANIZE YOUR WAY</title>
+                          <path
+                            class="st0"
+                            d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
                                       l4.6,4.6l4.6-4.6l1.4,1.4L15,18.7z"></path>
-                      </svg>
-                    </span>
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div
+                    class="relative overflow-hidden transition-all max-h-0 duration-700"
+                    x-bind:style="selected == 2 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
+                    <div class="px-8 pb-8 text-[#545454] text-sm">
+                      <p>
+                        At the close of an offering, all investors
+                        whose funds have “cleared” by this time will
+                        be included in the disbursement. At this time,
+                        each investor will receive an email from
+                        StartEngine with their countersigned
+                        Subscription Agreement, which will serve as
+                        their proof of purchase moving forward.
+                        <br />
+                        <br />
+                        Please keep in mind that a company can conduct
+                        a series of “closes” or withdrawals of funds
+                        throughout the duration of the campaign. If
+                        you are included in that withdrawal period,
+                        you will be emailed your countersigned
+                        Subscription Agreement and proof of purchase
+                        immediately following that withdrawal.
+                      </p>
+                    </div>
                   </div>
-                </button>
-                <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                  x-bind:style="selected == 2 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
-                  <div class="px-8 pb-8 text-[#545454] text-sm">
-                    <p>
-                      At the close of an offering, all investors whose funds have “cleared” by this time will be
-                      included
-                      in the disbursement.
-                      At this time, each investor will receive an email from StartEngine with their countersigned
-                      Subscription Agreement,
-                      which will serve as their proof of purchase moving forward.
-                      <br>
-                      <br>
-                      Please keep in mind that a company can conduct a series of “closes” or withdrawals of funds
-                      throughout the duration of
-                      the campaign. If you are included in that withdrawal period, you will be emailed your
-                      countersigned
-                      Subscription
-                      Agreement and proof of purchase immediately following that withdrawal.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="relative border-b border-gray-200 transition-all duration-300"
-                :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
-                <button type="button" class="w-full px-6 py-6" @click="selected !== 3 ? selected = 3 : selected = null">
-                  <div class="flex items-center text-left justify-between">
-                    <span class="text-gray-700 font-medium text-lg">What will the return on my investment be?</span>
-                    <span class="text-[#ff0020]">
-                      <svg class="svg-icon transition-all duration-300" :class="{ 'rotate-180': selected === 3 }"
-                        width="31" height="31" viewBox="0 0 30.33 30.27" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>ORGANIZE YOUR WAY</title>
-                        <path class="st0" d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
+                </li>
+                <li
+                  class="relative border-b border-gray-200 transition-all duration-300"
+                  :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
+                  <button
+                    type="button"
+                    class="w-full px-6 py-6"
+                    @click="selected !== 3 ? selected = 3 : selected = null">
+                    <div
+                      class="flex items-center text-left justify-between">
+                      <span class="text-gray-700 font-medium text-lg"
+                        >What will the return on my investment
+                        be?</span
+                      >
+                      <span class="text-[#ff0020]">
+                        <svg
+                          class="svg-icon transition-all duration-300"
+                          :class="{ 'rotate-180': selected === 3 }"
+                          width="31"
+                          height="31"
+                          viewBox="0 0 30.33 30.27"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>ORGANIZE YOUR WAY</title>
+                          <path
+                            class="st0"
+                            d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
                                                   l4.6,4.6l4.6-4.6l1.4,1.4L15,18.7z"></path>
-                      </svg>
-                    </span>
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div
+                    class="relative overflow-hidden transition-all max-h-0 duration-700"
+                    x-bind:style="selected == 3 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
+                    <div class="px-8 pb-8 text-[#545454] text-sm">
+                      <p>
+                        StartEngine assists companies in raising
+                        capital, and once the offering is closed, we
+                        are no longer involved with whether the
+                        company chooses to list shares on a secondary
+                        market, or what occurs thereafter. Therefore,
+                        StartEngine has no control or insight into
+                        your investment after the close of the live
+                        offering. In addition, we are not permitted to
+                        provide financial advice. You may want to
+                        contact a financial professional to discuss
+                        possible investment outcomes.
+                      </p>
+                    </div>
                   </div>
-                </button>
-                <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                  x-bind:style="selected == 3 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
-                  <div class="px-8 pb-8 text-[#545454] text-sm">
-                    <p>
-                      StartEngine assists companies in raising capital, and once the offering is closed, we are no
-                      longer
-                      involved with
-                      whether the company chooses to list shares on a secondary market, or what occurs thereafter.
-                      Therefore, StartEngine has
-                      no control or insight into your investment after the close of the live offering. In addition, we
-                      are
-                      not permitted to
-                      provide financial advice. You may want to contact a financial professional to discuss possible
-                      investment outcomes.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="relative border-b border-gray-200 transition-all duration-300"
-                :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
-                <button type="button" class="w-full px-6 py-6" @click="selected !== 4 ? selected = 4 : selected = null">
-                  <div class="flex items-center text-left justify-between">
-                    <span class="text-gray-700 font-medium text-lg">Can I cancel my investment?</span>
-                    <span class="text-[#ff0020]">
-                      <svg class="svg-icon transition-all duration-300" :class="{ 'rotate-180': selected === 4 }"
-                        width="31" height="31" viewBox="0 0 30.33 30.27" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>ORGANIZE YOUR WAY</title>
-                        <path class="st0" d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
+                </li>
+                <li
+                  class="relative border-b border-gray-200 transition-all duration-300"
+                  :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
+                  <button
+                    type="button"
+                    class="w-full px-6 py-6"
+                    @click="selected !== 4 ? selected = 4 : selected = null">
+                    <div
+                      class="flex items-center text-left justify-between">
+                      <span class="text-gray-700 font-medium text-lg"
+                        >Can I cancel my investment?</span
+                      >
+                      <span class="text-[#ff0020]">
+                        <svg
+                          class="svg-icon transition-all duration-300"
+                          :class="{ 'rotate-180': selected === 4 }"
+                          width="31"
+                          height="31"
+                          viewBox="0 0 30.33 30.27"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>ORGANIZE YOUR WAY</title>
+                          <path
+                            class="st0"
+                            d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
                                                   l4.6,4.6l4.6-4.6l1.4,1.4L15,18.7z"></path>
-                      </svg>
-                    </span>
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div
+                    class="relative overflow-hidden transition-all max-h-0 duration-700"
+                    x-bind:style="selected == 4 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
+                    <div class="px-8 pb-8 text-[#545454] text-sm">
+                      <p>
+                        For Regulation Crowdfunding, investors are
+                        able to cancel their investment at any point
+                        throughout the campaign up until 48 hours
+                        before the closing of the offering. Note: If
+                        the company does a rolling close, they will
+                        post an update to their current investors,
+                        giving them the opportunity to cancel during
+                        this timeframe. If you do not cancel within
+                        this 5-day timeframe, your funds will be
+                        invested in the company, and you will no
+                        longer be able to cancel the investment. If
+                        your funds show as 'Invested' on your account
+                        dashboard, your investment can no longer be
+                        canceled.
+                        <br />
+                        <br />
+                        For Regulation A+, StartEngine allows for a
+                        four-hour cancelation period. Once the
+                        four-hour window has passed, it is up to each
+                        company to set their own cancelation policy.
+                        You may find the company's cancelation policy
+                        in the company's offering circular.
+                        <br />
+                        <br />
+                        Once your investment is canceled, there is a
+                        10-day clearing period (from the date your
+                        investment was submitted). After your funds
+                        have cleared the bank, you will receive your
+                        refund within 10 business days.
+                        <br />
+                        <br />
+                        Refunds that are made through ACH payments can
+                        take up to 10 business days to clear.
+                        Unfortunately, we are at the mercy of the
+                        bank, but we will do everything we can to get
+                        you your refund as soon as possible. However,
+                        every investment needs to go through the
+                        clearing process in order to get sent back to
+                        the account associated with the investment.
+                      </p>
+                    </div>
                   </div>
-                </button>
-                <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                  x-bind:style="selected == 4 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
-                  <div class="px-8 pb-8 text-[#545454] text-sm">
-                    <p>
-                      For Regulation Crowdfunding, investors are able to cancel their investment at any point throughout
-                      the campaign up until
-                      48 hours before the closing of the offering. Note: If the company does a rolling close, they will
-                      post an update to
-                      their current investors, giving them the opportunity to cancel during this timeframe. If you do
-                      not
-                      cancel within this
-                      5-day timeframe, your funds will be invested in the company, and you will no longer be able to
-                      cancel the investment. If
-                      your funds show as 'Invested' on your account dashboard, your investment can no longer be
-                      canceled.
-                      <br>
-                      <br>
-                      For Regulation A+, StartEngine allows for a four-hour cancelation period. Once the four-hour
-                      window
-                      has passed, it is up
-                      to each company to set their own cancelation policy. You may find the company's cancelation policy
-                      in the company's
-                      offering circular.
-                      <br>
-                      <br>
-                      Once your investment is canceled, there is a 10-day clearing period (from the date your investment
-                      was submitted). After
-                      your funds have cleared the bank, you will receive your refund within 10 business days.
-                      <br>
-                      <br>
-                      Refunds that are made through ACH payments can take up to 10 business days to clear.
-                      Unfortunately,
-                      we are at the mercy
-                      of the bank, but we will do everything we can to get you your refund as soon as possible. However,
-                      every investment
-                      needs to go through the clearing process in order to get sent back to the account associated with
-                      the investment.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="relative border-b border-gray-200 transition-all duration-300"
-                :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
-                <button type="button" class="w-full px-6 py-6" @click="selected !== 5 ? selected = 5 : selected = null">
-                  <div class="flex items-center text-left justify-between">
-                    <span class="text-gray-700 font-medium text-lg">What is the difference between Regulation
-                      Crowdfunding
-                      and Regulation A+?</span>
-                    <span class="text-[#ff0020]">
-                      <svg class="svg-icon transition-all duration-300" :class="{ 'rotate-180': selected === 5 }"
-                        width="31" height="31" viewBox="0 0 30.33 30.27" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>ORGANIZE YOUR WAY</title>
-                        <path class="st0" d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
+                </li>
+                <li
+                  class="relative border-b border-gray-200 transition-all duration-300"
+                  :class="{ 'bg-gray-100 md:rounded-lg': selected == 2 }">
+                  <button
+                    type="button"
+                    class="w-full px-6 py-6"
+                    @click="selected !== 5 ? selected = 5 : selected = null">
+                    <div
+                      class="flex items-center text-left justify-between">
+                      <span class="text-gray-700 font-medium text-lg"
+                        >What is the difference between Regulation
+                        Crowdfunding and Regulation A+?</span
+                      >
+                      <span class="text-[#ff0020]">
+                        <svg
+                          class="svg-icon transition-all duration-300"
+                          :class="{ 'rotate-180': selected === 5 }"
+                          width="31"
+                          height="31"
+                          viewBox="0 0 30.33 30.27"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>ORGANIZE YOUR WAY</title>
+                          <path
+                            class="st0"
+                            d="M15,0C6.7,0,0,6.7,0,15c0,8.3,6.7,15,15,15c8.3,0,15-6.7,15-15C30,6.7,23.3,0,15,0z M15,18.7l-6-6l1.4-1.4
                                                   l4.6,4.6l4.6-4.6l1.4,1.4L15,18.7z"></path>
-                      </svg>
-                    </span>
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div
+                    class="relative overflow-hidden transition-all max-h-0 duration-700"
+                    x-bind:style="selected == 5 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
+                    <div class="px-8 pb-8 text-[#545454] text-sm">
+                      <p>
+                        Both Title III (Regulation Crowdfunding) and
+                        Title IV (Reg A+) help entrepreneurs crowdfund
+                        capital investments from unaccredited and
+                        accredited investors. The differences between
+                        these regulations are related to the investor
+                        limitations, the differing amounts of money
+                        companies are permitted to raise, and
+                        differing disclosure and filing requirements.
+                        To learn more about Regulation Crowdfunding,
+                        and for Regulation A+
+                      </p>
+                    </div>
                   </div>
-                </button>
-                <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                  x-bind:style="selected == 5 ? 'max-height: ' + $el.scrollHeight + 'px' : ''">
-                  <div class="px-8 pb-8 text-[#545454] text-sm">
-                    <p>
-                      Both Title III (Regulation Crowdfunding) and Title IV (Reg A+) help entrepreneurs crowdfund
-                      capital
-                      investments from
-                      unaccredited and accredited investors. The differences between these regulations are related to
-                      the
-                      investor
-                      limitations, the differing amounts of money companies are permitted to raise, and differing
-                      disclosure and filing
-                      requirements. To learn more about Regulation Crowdfunding, and for Regulation A+
-                    </p>
-                  </div>
-                </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- FAQ SECTION END -->
+    </main>
+    <!-- MAIN CONTAINER END -->
+    <!-- FOOTER SECTION START -->
+    <footer class="bg-[#343434] text-[#777] text-sm py-10">
+      <div
+        class="container max-w-screen-xl mx-auto px-4 font-['Roboto']">
+        <nav class="lg:flex lg:flex-wrap lg:space-x-16 mb-3">
+          <div class="mb-6 grow">
+            <p class="font-bold mb-4 text-base">Getting Started</p>
+            <ul>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Get Funded</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >How To Invest</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Pricing</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Sign up</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Log In</a
+                >
               </li>
             </ul>
           </div>
+          <div class="mb-6 grow">
+            <p class="font-bold mb-4 text-base">Browse</p>
+            <ul>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Browse Companies</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Companies</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >People</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6 grow">
+            <p class="font-bold mb-4 text-base">Legal</p>
+            <ul>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Terms of Use</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Privacy Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6 grow">
+            <p class="font-bold mb-4 text-base">Crowdfunder</p>
+            <ul>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >About</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Blog</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Press</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Sitemap</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Support</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6 grow">
+            <p class="font-bold mb-4 text-base">Learn</p>
+            <ul>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Investment Crowdfunding</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Successfully Raise Investment</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Entrepreneur FAQ</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Investor FAQ</a
+                >
+              </li>
+              <li
+                class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
+                <a
+                  class="text-current"
+                  href=""
+                  >Knowledge Center</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div
+          class="flex flex-col lg:flex-row justify-center lg:justify-between gap-3 text-sm border-y border-[#444] py-5 mb-5">
+          <div class="w-24 mx-auto lg:m-0">
+            <a
+              href="#"
+              class="block w-full h-full hover:opacity-75 transition-all">
+              <img
+                src="images/mobWOW-Base-Logo-Red (2) - light.svg"
+                class="max-w-full h-auto"
+                alt="" />
+            </a>
+          </div>
+          <p class="text-center text-white/80">
+            © 2023 mobWOW.com All rights reserved.
+          </p>
         </div>
+        <p class="text-xs">
+          DISCLOSURE: Crowdfunder.com is a website owned and operated
+          by Crowdfunder, Inc. ("Crowdfunder"). By accessing this
+          website or any page thereof, you agree to be bound by the
+          Terms of Use and Privacy Policy, as amended from time to
+          time and in effect at the most recent time you access this
+          website or any page thereof. Nothing on this website shall
+          constitute an offer to sell, or a solicitation of an offer
+          to subscribe for or buy, any securities to any person in any
+          jurisdiction to whom or in which such offer or solicitation
+          is unlawful. Consequently, any featured, front page or
+          prominent placement of a listed company on this site is not
+          deemed to be a recommendation and may be based on various
+          algorithms or selections that drive traffic to such listed
+          company. Crowdfunder does not effect securities
+          transactions, give investment advice or recommend any
+          securities as it is not registered as a broker-dealer,
+          funding portal or investment adviser with the U.S.
+          Securities and Exchange Commission or the securities
+          regulatory commission, agency or body of any state of the
+          United States or any non-U.S. jurisdiction. As such,
+          Crowdfunder is not acting in a fiduciary capacity with
+          respect to any user of the Crowdfunder services, and
+          Crowdfunder disclaims any broker-client or advisor-client
+          relationship with respect to any party using those services.
+          Listed companies are actively seeking to raise early stage
+          capital pursuant to Rule 506(b) or Rule 506(c) of Regulation
+          D ("Regulation D") under the U.S. Securities Act of 1933, as
+          amended (the "Securities Act"), or pursuant to Regulation A
+          (sometimes referred to as "Regulation A+") under the
+          Securities Act ("Regulation A"). A listed company’s
+          offerings are being made by, and all the information
+          included on this website relating to a listed company and
+          its securities has been provided by and is the
+          responsibility of, such listed company. A listed company’s
+          offerings on this website, if made pursuant to Rule 506(b)
+          or Rule 506(c) of Regulation D, generally are available only
+          to "accredited investors" as defined in Regulation D.
+          Accredited investors are able to identify listed companies
+          in which they may have an interest after a certification
+          process for Rule 506(b) offerings, while Rule 506(c)
+          offerings are available for the general public to view.
+          Offerings made pursuant to Regulation A are also generally
+          available for the general public to view. Investing in
+          securities, particularly in securities issued by start-up
+          companies, involves substantial risk, and investors should
+          be able to bear the loss of their entire investment. All
+          investors should make their own determination of whether or
+          not to make any investment based on their own independent
+          evaluation and analysis. Crowdfunder does not verify or
+          assure that information provided by any listed company
+          offering its securities is accurate or complete or that the
+          valuation of such securities is appropriate. Neither
+          Crowdfunder nor any of its directors, officers, employees,
+          representatives, affiliates or agents shall have any
+          liability whatsoever arising from any error or
+          incompleteness of fact or opinion in, or lack of care in the
+          preparation of, any of the materials posted on this website.
+          Crowdfunder does not provide legal, accounting or tax
+          advice. Any representation or implication to the contrary is
+          expressly disclaimed.
+          <br />
+          <br />
+          You can learn more about investing in Regulation D and
+          Regulation A offerings from the SEC or FINRA.
+        </p>
       </div>
-    </section>
-    <!-- FAQ SECTION END -->
-  </main>
-  <!-- MAIN CONTAINER END -->
-  <!-- FOOTER SECTION START -->
-  <footer class="bg-[#343434] text-[#777] text-sm py-10">
-    <div class="container max-w-screen-xl mx-auto px-4 font-['Roboto']">
-      <nav class="lg:flex lg:flex-wrap lg:space-x-16 mb-3">
-        <div class="mb-6 grow">
-          <p class="font-bold mb-4 text-base">Getting Started</p>
-          <ul>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Get Funded</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">How To Invest</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Pricing</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Sign up</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Log In</a>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-6 grow">
-          <p class="font-bold mb-4 text-base">Browse</p>
-          <ul>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Browse Companies</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Companies</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">People</a>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-6 grow">
-          <p class="font-bold mb-4 text-base">Legal</p>
-          <ul>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Terms of Use</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Privacy Policy</a>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-6 grow">
-          <p class="font-bold mb-4 text-base">Crowdfunder</p>
-          <ul>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">About</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Blog</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Press</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Sitemap</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Support</a>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-6 grow">
-          <p class="font-bold mb-4 text-base">Learn</p>
-          <ul>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Investment Crowdfunding</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Successfully Raise Investment</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Entrepreneur FAQ</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Investor FAQ</a>
-            </li>
-            <li class="text-sm text-[#bbb] hover:text-[#ff0020] transition-all mb-2">
-              <a class="text-current" href="">Knowledge Center</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div
-        class="flex flex-col lg:flex-row justify-center lg:justify-between gap-3 text-sm border-y border-[#444] py-5 mb-5">
-        <div class="w-24 mx-auto lg:m-0">
-          <a href="#" class="block w-full h-full hover:opacity-75 transition-all">
-            <img src="images/mobWOW-Base-Logo-Red (2) - light.svg" class="max-w-full h-auto" alt="">
-          </a>
-        </div>
-        <p class="text-center text-white/80">© 2023 mobWOW.com All rights reserved.</p>
-      </div>
-      <p class="text-xs">
-        DISCLOSURE: Crowdfunder.com is a website owned and operated by Crowdfunder, Inc. ("Crowdfunder"). By accessing
-        this
-        website or any page thereof, you agree to be bound by the Terms of Use and Privacy Policy, as amended from time
-        to time
-        and in effect at the most recent time you access this website or any page thereof. Nothing on this website shall
-        constitute an offer to sell, or a solicitation of an offer to subscribe for or buy, any securities to any person
-        in any
-        jurisdiction to whom or in which such offer or solicitation is unlawful. Consequently, any featured, front page
-        or
-        prominent placement of a listed company on this site is not deemed to be a recommendation and may be based on
-        various
-        algorithms or selections that drive traffic to such listed company. Crowdfunder does not effect securities
-        transactions,
-        give investment advice or recommend any securities as it is not registered as a broker-dealer, funding portal or
-        investment adviser with the U.S. Securities and Exchange Commission or the securities regulatory commission,
-        agency or
-        body of any state of the United States or any non-U.S. jurisdiction. As such, Crowdfunder is not acting in a
-        fiduciary
-        capacity with respect to any user of the Crowdfunder services, and Crowdfunder disclaims any broker-client or
-        advisor-client relationship with respect to any party using those services. Listed companies are actively
-        seeking to
-        raise early stage capital pursuant to Rule 506(b) or Rule 506(c) of Regulation D ("Regulation D") under the U.S.
-        Securities Act of 1933, as amended (the "Securities Act"), or pursuant to Regulation A (sometimes referred to as
-        "Regulation A+") under the Securities Act ("Regulation A"). A listed company’s offerings are being made by, and
-        all the
-        information included on this website relating to a listed company and its securities has been provided by and is
-        the
-        responsibility of, such listed company. A listed company’s offerings on this website, if made pursuant to Rule
-        506(b) or
-        Rule 506(c) of Regulation D, generally are available only to "accredited investors" as defined in Regulation D.
-        Accredited investors are able to identify listed companies in which they may have an interest after a
-        certification
-        process for Rule 506(b) offerings, while Rule 506(c) offerings are available for the general public to view.
-        Offerings
-        made pursuant to Regulation A are also generally available for the general public to view. Investing in
-        securities,
-        particularly in securities issued by start-up companies, involves substantial risk, and investors should be able
-        to bear
-        the loss of their entire investment. All investors should make their own determination of whether or not to make
-        any
-        investment based on their own independent evaluation and analysis. Crowdfunder does not verify or assure that
-        information provided by any listed company offering its securities is accurate or complete or that the valuation
-        of such
-        securities is appropriate. Neither Crowdfunder nor any of its directors, officers, employees, representatives,
-        affiliates or agents shall have any liability whatsoever arising from any error or incompleteness of fact or
-        opinion in,
-        or lack of care in the preparation of, any of the materials posted on this website. Crowdfunder does not provide
-        legal,
-        accounting or tax advice. Any representation or implication to the contrary is expressly disclaimed.
-        <br>
-        <br>
-        You can learn more about investing in Regulation D and Regulation A offerings from the SEC or FINRA.
-      </p>
-    </div>
-  </footer>
-  <!-- FOOTER SECTION END -->
-</body>
-
+    </footer>
+    <!-- FOOTER SECTION END -->
+  </body>
 </html>

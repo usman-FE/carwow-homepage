@@ -1220,10 +1220,6 @@ video {
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
-.border-transparent {
-  border-color: transparent;
-}
-
 .bg-\[\#151515\] {
   --tw-bg-opacity: 1;
   background-color: rgb(21 21 21 / var(--tw-bg-opacity));
@@ -1443,6 +1439,11 @@ video {
 .py-24 {
   padding-top: 6rem;
   padding-bottom: 6rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-5 {
@@ -2175,6 +2176,11 @@ video {
   margin-left: 0.625rem;
 }
 
+.hover\:border-\[\#ff0020\]:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 0 32 / var(--tw-border-opacity));
+}
+
 .hover\:border-neutral-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(212 212 212 / var(--tw-border-opacity));
@@ -2183,11 +2189,6 @@ video {
 .hover\:border-white:hover {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.hover\:border-\[\#ff0020\]:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 0 32 / var(--tw-border-opacity));
 }
 
 .hover\:bg-\[\#df1732\]:hover {
@@ -2666,11 +2667,6 @@ video {
   .lg\:py-5 {
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
-  }
-
-  .lg\:py-6 {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
   }
 
   .lg\:pb-16 {
